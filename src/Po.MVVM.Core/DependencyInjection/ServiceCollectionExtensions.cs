@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Po.MVVM.Core.DependencyInjection;
 
-public static class MVVMServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPoMVVM(this IServiceCollection services)
     {

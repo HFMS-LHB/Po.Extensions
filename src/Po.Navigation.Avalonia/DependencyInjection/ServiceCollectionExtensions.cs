@@ -6,9 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Po.Navigation.Avalonia.Extensions;
+namespace Po.Navigation.Avalonia.DependencyInjection;
 
-public static class NavigationServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPoNavigation(this IServiceCollection services)
     {

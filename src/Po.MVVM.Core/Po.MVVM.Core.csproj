@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<PackageId>Po.MVVM.Core</PackageId>
 		<Version>0.0.1</Version>
-		<Description>MVVM core utilities for .NET applications.</Description>
+		<Description>Lightweight MVVM infrastructure for .NET applications.</Description>
 		<PackageTags>MVVM;CommunityToolkit;ObservableObject;ViewModel</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

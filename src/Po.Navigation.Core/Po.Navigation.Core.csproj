@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<PackageId>Po.Navigation.Core</PackageId>
 		<Version>0.0.1</Version>
-		<Description>Platform independent navigation abstractions.</Description>
+		<Description>Navigation infrastructure for .NET applications.</Description>
 		<PackageTags>Navigation;MVVM;Core</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

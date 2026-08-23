@@ -1,11 +1,9 @@
-# Po.MVVM.Core
-
-MVVM utilities for .NET applications.
+# Po.Application.Core
 
 ## Install
 
 ```powershell
-dotnet add package Po.MVVM.Core
+dotnet add package Po.Application.Core
 ```
 
 ## Use
@@ -15,7 +13,6 @@ dotnet add package Po.MVVM.Core
     public static void Main(string[] args) 
     {
         var host = CreateHostBuilder(args).Build();
-        host.Services.InitializePoContainer();
         host.Start();
 
         // ...
@@ -27,7 +24,20 @@ dotnet add package Po.MVVM.Core
         return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => 
             {
-                services.AddPoMVVM();
+                services.AddPoApplicationCore();
             });
     }
+```
+
+## Use SingleInstanceManager
+
+```csharp
+
+using var instance = SingleInstanceManager.Acquire();
+
+if (instance is null)
+{
+    return;
+}
+
 ```

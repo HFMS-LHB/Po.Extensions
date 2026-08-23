@@ -1,11 +1,9 @@
-# Po.MVVM.Core
-
-MVVM utilities for .NET applications.
+# Po.Application.Avalonia
 
 ## Install
 
 ```powershell
-dotnet add package Po.MVVM.Core
+dotnet add package Po.Application.Avalonia
 ```
 
 ## Use
@@ -15,7 +13,6 @@ dotnet add package Po.MVVM.Core
     public static void Main(string[] args) 
     {
         var host = CreateHostBuilder(args).Build();
-        host.Services.InitializePoContainer();
         host.Start();
 
         // ...
@@ -27,7 +24,7 @@ dotnet add package Po.MVVM.Core
         return Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => 
             {
-                services.AddPoMVVM();
+                services.AddPoApplicationAvalonia();
             });
     }
 ```

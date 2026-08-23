@@ -3,7 +3,7 @@
 		<PropertyGroup>
 		<PackageId>Po.DialogHost.Avalonia</PackageId>
 		<Version>0.0.1</Version>
-		<Description>DialogHost service and MVVM dialog support for Avalonia.</Description>
+		<Description>Dialog framework built on DialogHost.Avalonia.</Description>
 		<PackageTags>Avalonia;Dialog;DialogHost;MVVM</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>

@@ -27,7 +27,9 @@ $projects = @(
     "src/Po.MVVM.Core/Po.MVVM.Core.csproj",
     "src/Po.Navigation.Core/Po.Navigation.Core.csproj",
     "src/Po.Navigation.Avalonia/Po.Navigation.Avalonia.csproj",
-    "src/Po.DialogHost.Avalonia/Po.DialogHost.Avalonia.csproj"
+    "src/Po.DialogHost.Avalonia/Po.DialogHost.Avalonia.csproj",
+    "src/Po.Application.Core/Po.Application.Core.csproj",
+    "src/Po.Application.Avalonia/Po.Application.Avalonia.csproj"
 )
 
 

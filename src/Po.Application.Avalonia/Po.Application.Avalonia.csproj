@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageId>Po.Application.Avalonia</PackageId>
+		<Version>0.0.1</Version>
+		<Description>Avalonia application infrastructure and platform services.</Description>
+		<PackageTags>Avalonia;Application</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.Application.Core\Po.Application.Core.csproj" />
+  </ItemGroup>
+
+</Project>

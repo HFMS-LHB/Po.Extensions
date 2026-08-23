@@ -8,9 +8,9 @@ using System.Text;
 
 namespace Po.DialogHost.Avalonia.DependencyInjection;
 
-public static class DialogServiceCollectionExtensions
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPoDialog(this IServiceCollection services)
+    public static IServiceCollection AddPoDialogHost(this IServiceCollection services)
     {
         services.AddSingleton<IPoDialogService, PoDialogService>();
 
