@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageId>Po.Navigation.Core</PackageId>
+		<Version>0.0.1</Version>
+		<Description>Platform independent navigation abstractions.</Description>
+		<PackageTags>Navigation;MVVM;Core</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.MVVM.Core\Po.MVVM.Core.csproj" />
+  </ItemGroup>
+
+</Project>

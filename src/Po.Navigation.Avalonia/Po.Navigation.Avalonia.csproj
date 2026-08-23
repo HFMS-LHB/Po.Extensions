@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageId>Po.DialogHost.Avalonia</PackageId>
+		<Version>0.0.1</Version>
+		<Description>DialogHost service and MVVM dialog support for Avalonia.</Description>
+		<PackageTags>Avalonia;Dialog;DialogHost;MVVM</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+    <PackageReference Include="System.Reactive" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.Navigation.Core\Po.Navigation.Core.csproj" />
+  </ItemGroup>
+
+</Project>

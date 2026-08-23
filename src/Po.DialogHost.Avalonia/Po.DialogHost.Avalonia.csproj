@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageId>Po.Navigation.Avalonia</PackageId>
+		<Version>0.0.1</Version>
+		<Description>Region based navigation framework for Avalonia applications.</Description>
+		<PackageTags>Avalonia;Navigation;MVVM;Region</PackageTags>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+		<PackageReference Include="DialogHost.Avalonia" Version="0.12.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
+		<PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
+	</ItemGroup>
+
+</Project>

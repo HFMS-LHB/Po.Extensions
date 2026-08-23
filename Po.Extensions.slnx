@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="src/Po.MVVM.Core/Po.MVVM.Core.csproj" Id="e456f694-b243-4b07-9d5f-e507b713cbe0" />
+    <Project Path="src/Po.Navigation.Core/Po.Navigation.Core.csproj" />
+  </Folder>
+  <Folder Name="/SolutionItems/">
+    <File Path="Directory.Build.props" />
+  </Folder>
+  <Folder Name="/SolutionItems/build/">
+    <File Path="build/build.ps1" />
+  </Folder>
+  <Project Path="src/Po.DialogHost.Avalonia/Po.DialogHost.Avalonia.csproj" Id="1e815a6e-1cd2-4499-9592-73232e50fe49" />
+  <Project Path="src/Po.Navigation.Avalonia/Po.Navigation.Avalonia.csproj" Id="22e98f81-a1a1-47de-9d39-fe1e3a45c096" />
+</Solution>
