@@ -10,6 +10,8 @@ namespace Po.DialogHost.Avalonia
 {
     public class PoDialogHost : DialogHostAvalonia.DialogHost
     {
+        protected override Type StyleKeyOverride => typeof(DialogHostAvalonia.DialogHost);
+
         public PoDialogHost()
         {
             DialogOpened += OnDialogOpened;

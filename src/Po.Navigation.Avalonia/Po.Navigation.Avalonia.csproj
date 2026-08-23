@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<PackageId>Po.DialogHost.Avalonia</PackageId>
+		<PackageId>Po.Navigation.Avalonia</PackageId>
 		<Version>0.0.1</Version>
-		<Description>DialogHost service and MVVM dialog support for Avalonia.</Description>
-		<PackageTags>Avalonia;Dialog;DialogHost;MVVM</PackageTags>
+		<Description>Region based navigation framework for Avalonia applications.</Description>
+		<PackageTags>Avalonia;Navigation;MVVM;Region</PackageTags>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 

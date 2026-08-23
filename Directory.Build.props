@@ -10,7 +10,7 @@
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 		<Authors>Po</Authors>
 		<Company>Po</Company>
-		<RepositoryUrl></RepositoryUrl>
+		<RepositoryUrl>https://github.com/HFMS-LHB/Po.Extensions</RepositoryUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

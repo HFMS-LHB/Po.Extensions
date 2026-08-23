@@ -18,7 +18,25 @@ services.AddPoNavigation();
 ## Register
 
 ```csharp
-services.AddNavigation<LoginView, LoginViewModel>();
+
+    [STAThread]
+    public static void Main(string[] args) 
+    {
+        var host = CreateHostBuilder(args).Build();
+        host.Services.InitializePoContainer();
+        host.Start();
+
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+    }
+
+    private static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddPoMVVM();
+        services.AddPoNavigation();
+
+        services.AddNavigation<LoginView, LoginViewModel>();
+    }
 ```
 
 ## Use
@@ -26,23 +44,23 @@ services.AddNavigation<LoginView, LoginViewModel>();
 ** axaml **
 
 ```csharp
-<ContentControl po:RegionManager.RegionName="MainRegion"/>
+    <ContentControl po:RegionManager.RegionName="MainRegion"/>
 ```
 
 ** ViewModel **
 
 ```csharp
-public partial class LoginViewModel : RegionViewModelBase
-{
-    private readonly IRegionManager _regionManager;
-    public LoginViewModel(IRegionManager regionManager)
+    public partial class LoginViewModel : RegionViewModelBase
     {
-        _regionManager = regionManager;
-    }
+        private readonly IRegionManager _regionManager;
+        public LoginViewModel(IRegionManager regionManager)
+        {
+            _regionManager = regionManager;
+        }
 
-    private void Submit()
-    {
-        _regionManager.RequestNavigate("MainRegion", "Dashboard");
+        private void Submit()
+        {
+            _regionManager.RequestNavigate("MainRegion", "Dashboard");
+        }
     }
-}
 ```

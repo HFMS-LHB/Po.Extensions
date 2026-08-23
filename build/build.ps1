@@ -33,7 +33,11 @@ $projects = @(
 
 Write-Host "Restore solution..."
 
+Push-Location $root
+
 dotnet restore
+
+Pop-Location
 
 
 foreach ($project in $projects)

@@ -14,7 +14,25 @@ services.AddPoDialog();
 ## Register
 
 ```csharp
-services.AddNavigation<LoginView, LoginViewModel>();
+
+    [STAThread]
+    public static void Main(string[] args) 
+    {
+        var host = CreateHostBuilder(args).Build();
+        host.Services.InitializePoContainer();
+        host.Start();
+
+        BuildAvaloniaApp()
+            .StartWithClassicDesktopLifetime(args);
+    }
+
+    private static void ConfigureServices(IServiceCollection services)
+    {
+        services.AddPoMVVM();
+        services.AddPoDialog();
+
+        services.AddNavigation<LoginView, LoginViewModel>();
+    }
 ```
 
 ## Use

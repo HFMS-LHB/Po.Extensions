@@ -26,7 +26,7 @@ public static class PoContainer
     /// <summary>
     /// 初始化框架服务容器
     /// </summary>
-    public static void Initialize(IServiceProvider provider)
+    public static void InitializePoContainer(this IServiceProvider provider)
     {
         ArgumentNullException.ThrowIfNull(provider);
 

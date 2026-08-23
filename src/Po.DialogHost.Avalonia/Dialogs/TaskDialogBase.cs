@@ -1,4 +1,5 @@
 ﻿using Po.DialogHost.Avalonia.Interfaces;
+using Po.MVVM.Core.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,16 @@ namespace Po.DialogHost.Avalonia.Dialogs;
 /// 任务Dialog
 /// </summary>
 /// <param name="poDialogService"></param>
-public abstract class TaskDialogBase<TData>(IPoDialogService poDialogService) : PoDialogBase<TData>(poDialogService)
+public abstract class TaskDialogBase<TData> : PoDialogBase<TData>
 {
-    private readonly IPoDialogService _poDialogService = poDialogService;
+    private readonly IPoDialogService _poDialogService;
     private bool _closeRequested = false;
     private CancellationTokenSource? _cts;
+
+    protected TaskDialogBase()
+    {
+        _poDialogService = PoContainer.GetRequiredService<IPoDialogService>();
+    }
 
     /// <summary>
     /// 取消

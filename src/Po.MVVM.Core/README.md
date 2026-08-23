@@ -7,3 +7,10 @@ MVVM utilities for .NET applications.
 ```powershell
 dotnet add package Po.MVVM.Core
 ```
+
+## Use
+
+```csharp
+     var host = CreateHostBuilder(args).Build();
+     host.Services.InitializePoContainer();
+```

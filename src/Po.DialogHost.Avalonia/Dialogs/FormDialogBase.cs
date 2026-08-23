@@ -1,18 +1,19 @@
 ﻿using Po.DialogHost.Avalonia.Interfaces;
-
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Po.MVVM.Core.DependencyInjection;
 
 namespace Po.DialogHost.Avalonia.Dialogs;
 
 /// <summary>
 /// 表单Dialog
 /// </summary>
-/// <param name="poDialogService"></param>
-public abstract class FormDialogBase<TData>(IPoDialogService poDialogService) : PoDialogBase<TData>(poDialogService)
+public abstract class FormDialogBase<TData> : PoDialogBase<TData>
 {
-    private readonly IPoDialogService _poDialogService = poDialogService;
+    private readonly IPoDialogService _poDialogService;
+
+    protected FormDialogBase()
+    {
+        _poDialogService = PoContainer.GetRequiredService<IPoDialogService>();
+    }
 
     protected virtual bool Validate() => true;
 

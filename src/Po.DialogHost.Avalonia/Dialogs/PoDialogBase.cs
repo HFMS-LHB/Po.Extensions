@@ -13,8 +13,7 @@ namespace Po.DialogHost.Avalonia.Dialogs;
 /// <summary>
 /// Dialog基类
 /// </summary>
-/// <param name="poDialogService"></param>
-public abstract class PoDialogBase<TData>(IPoDialogService poDialogService) : ObservableValidator, IPoDialogPolicy
+public abstract class PoDialogBase<TData>() : ObservableValidator, IPoDialogPolicy, IPoDialogSessionAware
 {
     private DialogSession? _session;
 
@@ -27,18 +26,13 @@ public abstract class PoDialogBase<TData>(IPoDialogService poDialogService) : Ob
     public event Action? DialogOpened;
     public event Action? DialogClosed;
 
-    protected internal virtual void Initialize(TData data)
+    protected internal void Initialize(TData data)
     {
         Data = data ?? throw new ArgumentNullException(nameof(data));
-        OnDataInitialized();
+        OnDataChanged(data);
     }
 
-    protected virtual void OnDataInitialized() { }
-
-    internal void SetSession(DialogSession session)
-    {
-        _session = session;
-    }
+    public virtual void OnDataChanged(TData data) { }
 
     public virtual void RequestCancel()
     {
@@ -64,4 +58,8 @@ public abstract class PoDialogBase<TData>(IPoDialogService poDialogService) : Ob
         _session?.Close(parameter);
     }
 
+    public void SetSession(DialogSession session)
+    {
+        _session = session;
+    }
 }
