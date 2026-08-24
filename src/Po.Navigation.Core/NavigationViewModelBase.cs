@@ -10,10 +10,10 @@ using System.Text;
 
 namespace Po.Navigation.Core;
 
-public partial class RegionViewModelBase : ViewModelBase, INavigationAware, IConfirmNavigationRequest, IRegionMemberLifetime
+public partial class NavigationViewModelBase : ViewModelBase, INavigationAware, IConfirmNavigationRequest, IRegionMemberLifetime
 {
     private IEnumerable<INavigationLifecycleBehavior>? _behaviors;
-    public RegionViewModelBase()
+    public NavigationViewModelBase()
     {
         ErrorsChanged += (s, e) => OnPropertyChanged(nameof(CanSubmit));
     }

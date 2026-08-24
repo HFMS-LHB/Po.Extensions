@@ -8,6 +8,10 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="/" />
+	</ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Po.MVVM.Core\Po.MVVM.Core.csproj" />
   </ItemGroup>

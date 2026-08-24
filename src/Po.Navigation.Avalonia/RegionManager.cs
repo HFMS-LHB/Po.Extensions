@@ -3,6 +3,7 @@ using Avalonia.Controls;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Po.MVVM.Core.DependencyInjection;
 using Po.MVVM.Core.Interfaces;
 using Po.Navigation.Core;
 using Po.Navigation.Core.Interfaces;
@@ -11,18 +12,14 @@ namespace Po.Navigation.Avalonia;
 
 public class RegionManager : IAvaloniaRegionManager
 {
-    private readonly IServiceProvider _serviceProvider;
-
     private readonly Dictionary<string, ContentControl> _regions = new();
 
     private readonly Dictionary<string, NavigationRegistration> _registrations = new();
 
     private readonly Dictionary<string, Control> _cache = new();
 
-    public RegionManager(IServiceProvider serviceProvider,
-        IEnumerable<NavigationRegistration> registrations)
+    public RegionManager(IEnumerable<NavigationRegistration> registrations)
     {
-        _serviceProvider = serviceProvider;
 
         CheckRepeatRegister(registrations);
         _registrations = registrations.ToDictionary(x => x.Key);
@@ -174,8 +171,8 @@ public class RegionManager : IAvaloniaRegionManager
             return;
         }
 
-        var vm = _serviceProvider.GetRequiredService(registration.ViewModelType);
-        var view = (Control)_serviceProvider.GetRequiredService(registration.ViewType)!;
+        var vm = PoContainer.GetRequiredService(registration.ViewModelType);
+        var view = (Control)PoContainer.GetRequiredService(registration.ViewType)!;
         view.DataContext = vm;
 
         if (vm is INavigationAware aware)

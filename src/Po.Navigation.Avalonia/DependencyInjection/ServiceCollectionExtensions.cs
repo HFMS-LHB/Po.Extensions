@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using Po.Navigation.Core.Interfaces;
 
@@ -12,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPoNavigation(this IServiceCollection services)
     {
-        services.AddSingleton<IRegionManager, RegionManager>();
+        services.TryAddSingleton<IRegionManager, RegionManager>();
         return services;
     }
 }

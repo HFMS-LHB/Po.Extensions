@@ -18,10 +18,4 @@
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
-	<ItemGroup>
-		<None Include="$(MSBuildProjectDirectory)\README.md"
-              Pack="true"
-              PackagePath="/" />
-	</ItemGroup>
-
 </Project>

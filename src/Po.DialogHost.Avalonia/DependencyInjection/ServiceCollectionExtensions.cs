@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using Po.DialogHost.Avalonia.Interfaces;
 
@@ -12,7 +13,7 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPoDialogHost(this IServiceCollection services)
     {
-        services.AddSingleton<IPoDialogService, PoDialogService>();
+        services.TryAddSingleton<IPoDialogService, PoDialogService>();
 
         return services;
     }

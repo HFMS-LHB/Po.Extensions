@@ -14,9 +14,7 @@ public class ConventionViewModelTypeResolver
 
     public Type? Resolve(Type viewType)
     {
-        return _cache.GetOrAdd(
-            viewType,
-            ResolveInternal);
+        return _cache.GetOrAdd(viewType, ResolveInternal);
     }
 
 
@@ -28,24 +26,57 @@ public class ConventionViewModelTypeResolver
             return null;
 
 
-        var vmName =
-            fullName.Replace(
-                ".Views.",
-                ".ViewModels.");
-
-        var lastDot =
-            vmName.LastIndexOf('.');
+        var vmNamespace = fullName.Replace(".Views.", ".ViewModels.");
 
 
-        if (lastDot > 0)
+        var lastDot = vmNamespace.LastIndexOf('.');
+
+        if (lastDot <= 0) return null;
+
+        var namespaceName = vmNamespace[..lastDot];
+        var viewName = vmNamespace[(lastDot + 1)..];
+
+        foreach (var vmName in GetViewModelNames(viewName))
         {
-            vmName =
-                $"{vmName[..lastDot]}." +
-                $"{vmName[(lastDot + 1)..]}ViewModel";
+            var typeName =
+                $"{namespaceName}.{vmName}";
+
+            var vmType =
+                viewType.Assembly.GetType(typeName);
+
+            if (vmType != null)
+            {
+                return vmType;
+            }
         }
 
+        return null;
+    }
 
-        return viewType.Assembly
-            .GetType(vmName);
+    private static IEnumerable<string> GetViewModelNames(string viewName)
+    {
+        // 例如 Main -> MainViewModel
+        yield return $"{viewName}ViewModel";
+
+        // MainView -> MainViewModel
+        if (viewName.EndsWith("View"))
+        {
+            yield return
+                $"{viewName[..^4]}ViewModel";
+        }
+
+        // MainWindow -> MainViewModel
+        if (viewName.EndsWith("Window"))
+        {
+            yield return
+                $"{viewName[..^6]}ViewModel";
+        }
+
+        // MainPage -> MainViewModel
+        if (viewName.EndsWith("Page"))
+        {
+            yield return
+                $"{viewName[..^4]}ViewModel";
+        }
     }
 }

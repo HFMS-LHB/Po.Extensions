@@ -64,3 +64,36 @@ services.AddPoNavigation();
         }
     }
 ```
+
+## Default ViewModel lookup rule 
+
+```csharp
+
+    private static IEnumerable<string> GetViewModelNames(string viewName)
+    {
+        // Main -> MainViewModel
+        yield return $"{viewName}ViewModel";
+
+        // MainView -> MainViewModel
+        if (viewName.EndsWith("View"))
+        {
+            yield return
+                $"{viewName[..^4]}ViewModel";
+        }
+
+        // MainWindow -> MainViewModel
+        if (viewName.EndsWith("Window"))
+        {
+            yield return
+                $"{viewName[..^6]}ViewModel";
+        }
+
+        // MainPage -> MainViewModel
+        if (viewName.EndsWith("Page"))
+        {
+            yield return
+                $"{viewName[..^4]}ViewModel";
+        }
+    }
+
+```

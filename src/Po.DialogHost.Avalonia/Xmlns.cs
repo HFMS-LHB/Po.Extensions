@@ -1,3 +1,6 @@
 ﻿using Avalonia.Metadata;
 
-[assembly: XmlnsDefinition("https://github.com/HFMS-LHB/Po.Extensions", "Po.DialogHost.Avalonia")]
+using System.Runtime.CompilerServices;
+
+[assembly: XmlnsDefinition("https://po.mvvm.top/dialoghost", "Po.DialogHost.Avalonia")]
+[assembly: XmlnsPrefix("Po.DialogHost.Avalonia", "poDialogHost")]
