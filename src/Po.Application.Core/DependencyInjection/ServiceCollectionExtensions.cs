@@ -16,11 +16,9 @@ namespace Po.Application.Core.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPoApplicationCore(this IServiceCollection services, 
-        AppInfo? appInfo = null, 
-        AppEnvironment? appEnvironment = null)
+        AppInfo? appInfo = null)
     {
         appInfo ??= AppInfo.FromEntryAssembly();
-        appEnvironment ??= AppEnvironment.FromEnvironment();
 
         services.TryAddSingleton(appInfo);
 
