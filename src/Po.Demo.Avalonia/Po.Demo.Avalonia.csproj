@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Po.Demo.Avalonia</RootNamespace>
+    <OutputType>WinExe</OutputType>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.1" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="12.1.1" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.3">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+	  <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
+	  <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.11" />
+	  <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />
+	  <PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.Application.Avalonia\Po.Application.Avalonia.csproj" />
+    <ProjectReference Include="..\Po.DialogHost.Avalonia\Po.DialogHost.Avalonia.csproj" />
+    <ProjectReference Include="..\Po.Navigation.Avalonia\Po.Navigation.Avalonia.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\HomeView.axaml.cs">
+      <DependentUpon>HomeView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\MainWindow.axaml.cs">
+      <DependentUpon>MainWindow.axaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+</Project>
