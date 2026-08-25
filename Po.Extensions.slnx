@@ -5,11 +5,10 @@
     <Project Path="src/Po.Navigation.Core/Po.Navigation.Core.csproj" />
   </Folder>
   <Folder Name="/Demo/">
-    <Project Path="src/Po.Demo.Avalonia/Po.Demo.Avalonia.csproj" Id="a3f96c9b-b1cf-4284-bb6e-e37f089beb45" />
+    <Project Path="demo/Po.Demo.Avalonia/Po.Demo.Avalonia.csproj" />
   </Folder>
   <Folder Name="/SolutionItems/">
     <File Path=".gitignore" />
-    <File Path="Directory.Build.props" />
     <File Path="LICENSE" />
     <File Path="README.md" />
   </Folder>

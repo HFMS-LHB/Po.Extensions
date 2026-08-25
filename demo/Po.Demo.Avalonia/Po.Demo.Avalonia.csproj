@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>Po.Demo.Avalonia</RootNamespace>
     <OutputType>WinExe</OutputType>
+	<ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
@@ -23,9 +25,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Po.Application.Avalonia\Po.Application.Avalonia.csproj" />
-    <ProjectReference Include="..\Po.DialogHost.Avalonia\Po.DialogHost.Avalonia.csproj" />
-    <ProjectReference Include="..\Po.Navigation.Avalonia\Po.Navigation.Avalonia.csproj" />
+    <ProjectReference Include="..\..\src\Po.Application.Avalonia\Po.Application.Avalonia.csproj" />
+    <ProjectReference Include="..\..\src\Po.DialogHost.Avalonia\Po.DialogHost.Avalonia.csproj" />
+    <ProjectReference Include="..\..\src\Po.Navigation.Avalonia\Po.Navigation.Avalonia.csproj" />
   </ItemGroup>
 
   <ItemGroup>
