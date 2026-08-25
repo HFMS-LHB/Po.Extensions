@@ -13,6 +13,11 @@ namespace Po.DialogHost.Avalonia;
 
 public class PoDialogService : IPoDialogService
 {
+    public TDialog GetDialogViewModel<TDialog>() where TDialog : class
+    {
+        return PoContainer.GetRequiredService<TDialog>();
+    }
+
     public async Task<object?> ShowAsync(object content, string hostIdentifier = "Main")
     {
         return await Dispatcher.UIThread.InvokeAsync(() => DialogHostAvalonia.DialogHost.Show(content, hostIdentifier), DispatcherPriority.Background);
