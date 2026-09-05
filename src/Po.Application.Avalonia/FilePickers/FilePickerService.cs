@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 using Avalonia.Platform.Storage;
 
 using Po.Application.Avalonia.Windows;

@@ -1,4 +1,4 @@
-﻿using Avalonia.Controls;
+using Avalonia.Controls;
 
 using Po.Navigation.Core.Interfaces;
 
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace Po.Navigation.Avalonia;
 
-internal interface IAvaloniaRegionManager: IRegionManager
+internal interface IAvaloniaRegionManager : IRegionManager
 {
     void RegisterRegion(string regionName, ContentControl region);
 }

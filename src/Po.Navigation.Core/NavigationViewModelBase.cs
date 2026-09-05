@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 using Po.MVVM.Core;
 using Po.MVVM.Core.DependencyInjection;

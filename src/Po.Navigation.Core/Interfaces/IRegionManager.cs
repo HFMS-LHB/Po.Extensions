@@ -1,4 +1,4 @@
-﻿namespace Po.Navigation.Core.Interfaces;
+namespace Po.Navigation.Core.Interfaces;
 
 public interface IRegionManager
 {

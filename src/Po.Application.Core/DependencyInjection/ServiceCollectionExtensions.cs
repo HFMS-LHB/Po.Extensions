@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 using Po.Application.Core.Lifecycle;
@@ -15,7 +15,7 @@ namespace Po.Application.Core.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddPoApplicationCore(this IServiceCollection services, 
+    public static IServiceCollection AddPoApplicationCore(this IServiceCollection services,
         AppInfo? appInfo = null)
     {
         appInfo ??= AppInfo.FromEntryAssembly();

@@ -1,4 +1,4 @@
-﻿using Po.MVVM.Core.Interfaces;
+using Po.MVVM.Core.Interfaces;
 
 using System;
 using System.Collections.Concurrent;
