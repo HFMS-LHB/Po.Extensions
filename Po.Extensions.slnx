@@ -21,6 +21,9 @@
     <Project Path="src/Po.DialogHost.DialogHostAvalonia/Po.DialogHost.DialogHostAvalonia.csproj" />
     <Project Path="src/Po.DialogHost.Ursa/Po.DialogHost.Ursa.csproj" />
   </Folder>
+  <Folder Name="/SolutionItems/demo/">
+    <File Path="demo/Directory.Build.props" />
+  </Folder>
   <Folder Name="/SolutionItems/src/">
     <File Path="src/Directory.Build.props" />
   </Folder>

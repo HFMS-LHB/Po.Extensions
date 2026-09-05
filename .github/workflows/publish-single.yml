@@ -1,0 +1,335 @@
+name: Publish Single Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      project_path:
+        description: '要发布的项目路径（相对于仓库根目录）'
+        required: true
+        type: string
+        default: ''
+      version:
+        description: '版本号（留空则使用项目中的版本）'
+        required: false
+        type: string
+        default: ''
+      list_projects:
+        description: '列出所有可打包项目（勾选后仅列出项目，不执行发布）'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  # 任务1：列出所有可打包的项目
+  list-projects:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.list_projects == 'true'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Find all packable projects
+        run: |
+          echo "=========================================="
+          echo "可打包的 C# 项目列表："
+          echo "=========================================="
+          echo ""
+
+          # 查找所有 .csproj 文件，排除 obj 和 bin 目录
+          find . -name "*.csproj" \
+            ! -path "*/obj/*" \
+            ! -path "*/bin/*" \
+            ! -path "*/node_modules/*" \
+            | sort | while read -r project; do
+              # 检查项目是否在 demo 文件夹下
+              if [[ "$project" == */demo/* ]]; then
+                echo "  ⊘ $project (在 demo 文件夹下，已禁用打包)"
+                continue
+              fi
+
+              # 检查项目文件中的 IsPackable 设置
+              if grep -q "<IsPackable>false</IsPackable>" "$project" 2>/dev/null; then
+                echo "  ⊘ $project (项目文件设置 IsPackable=false)"
+                continue
+              fi
+
+              # 检查项目是否引用了某个设置了 IsPackable=false 的 Directory.Build.props
+              # 通过检查最近的 Directory.Build.props
+              project_dir=$(dirname "$project")
+              found_disable=false
+
+              while [[ "$project_dir" != "." && "$project_dir" != "/" ]]; do
+                if [ -f "$project_dir/Directory.Build.props" ]; then
+                  if grep -q "<IsPackable>false</IsPackable>" "$project_dir/Directory.Build.props" 2>/dev/null; then
+                    found_disable=true
+                    break
+                  fi
+                fi
+                project_dir=$(dirname "$project_dir")
+              done
+
+              if [ "$found_disable" = true ]; then
+                echo "  ⊘ $project (父目录 Directory.Build.props 设置 IsPackable=false)"
+                continue
+              fi
+
+              # 通过 dotnet msbuild 获取真实的 IsPackable 值（最准确）
+              echo "  ✓ $project"
+            done
+
+          echo ""
+          echo "=========================================="
+          echo "📊 统计信息："
+          echo "=========================================="
+
+          total=$(find . -name "*.csproj" ! -path "*/obj/*" ! -path "*/bin/*" | wc -l)
+          echo "总项目数：$total"
+
+          packable=$(find . -name "*.csproj" ! -path "*/obj/*" ! -path "*/bin/*" | while read -r p; do
+            if [[ "$p" != */demo/* ]] && ! grep -q "<IsPackable>false</IsPackable>" "$p" 2>/dev/null; then
+              project_dir=$(dirname "$p")
+              found=false
+              while [[ "$project_dir" != "." && "$project_dir" != "/" ]]; do
+                if [ -f "$project_dir/Directory.Build.props" ] && grep -q "<IsPackable>false</IsPackable>" "$project_dir/Directory.Build.props" 2>/dev/null; then
+                  found=true
+                  break
+                fi
+                project_dir=$(dirname "$project_dir")
+              done
+              if [ "$found" = false ]; then
+                echo "1"
+              fi
+            fi
+          done | wc -l)
+
+          echo "可打包项目数：$packable"
+          echo "已禁用打包项目数：$((total - packable))"
+          echo ""
+          echo "=========================================="
+          echo "💡 使用方法："
+          echo "   1. 复制上面 ✓ 标记的项目路径"
+          echo "   2. 在 'project_path' 输入框中粘贴路径"
+          echo "   3. 取消勾选 'list_projects'"
+          echo "   4. 重新运行工作流"
+          echo "=========================================="
+
+      - name: Show project versions
+        run: |
+          echo ""
+          echo "📋 项目版本信息："
+          echo "=========================================="
+          find . -name "*.csproj" \
+            ! -path "*/obj/*" \
+            ! -path "*/bin/*" \
+            | sort | while read -r project; do
+              if [[ "$project" == */demo/* ]]; then
+                continue
+              fi
+              version=$(grep -oP '(?<=<Version>).*?(?=</Version>)' "$project" 2>/dev/null || echo "未设置")
+              echo "  $(basename "$project" .csproj) → v$version"
+            done
+          echo "=========================================="
+
+  # 任务2：打包并发布单个项目
+  publish-single:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.list_projects != 'true' && github.event.inputs.project_path != ''
+    environment: Production
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Validate project path
+        run: |
+          PROJECT_PATH="${{ github.event.inputs.project_path }}"
+          if [ ! -f "$PROJECT_PATH" ]; then
+            echo "❌ 错误：项目文件不存在：$PROJECT_PATH"
+            echo ""
+            echo "请检查路径是否正确，项目文件必须存在。"
+            echo "提示：路径是相对于仓库根目录的，例如：src/MyProject/MyProject.csproj"
+            exit 1
+          fi
+
+          if [[ ! "$PROJECT_PATH" == *.csproj ]]; then
+            echo "❌ 错误：必须指定 .csproj 文件"
+            exit 1
+          fi
+
+          echo "✅ 项目文件验证通过：$PROJECT_PATH"
+
+      - name: Check if project is in demo folder
+        run: |
+          PROJECT_PATH="${{ github.event.inputs.project_path }}"
+          if [[ "$PROJECT_PATH" == */demo/* ]]; then
+            echo "❌ 错误：demo 文件夹下的项目已禁用打包（IsPackable=false）"
+            echo "demo 文件夹的 Directory.Build.props 设置了 <IsPackable>false</IsPackable>"
+            exit 1
+          fi
+          echo "✅ 项目不在 demo 文件夹中"
+
+      - name: Check project packable status
+        run: |
+          PROJECT_PATH="${{ github.event.inputs.project_path }}"
+
+          # 检查项目文件中的 IsPackable
+          if grep -q "<IsPackable>false</IsPackable>" "$PROJECT_PATH" 2>/dev/null; then
+            echo "❌ 错误：该项目已禁用打包（项目文件设置 IsPackable=false）"
+            exit 1
+          fi
+
+          # 检查父目录的 Directory.Build.props
+          project_dir=$(dirname "$PROJECT_PATH")
+          while [[ "$project_dir" != "." && "$project_dir" != "/" ]]; do
+            if [ -f "$project_dir/Directory.Build.props" ]; then
+              if grep -q "<IsPackable>false</IsPackable>" "$project_dir/Directory.Build.props" 2>/dev/null; then
+                echo "❌ 错误：父目录 $project_dir 的 Directory.Build.props 设置了 IsPackable=false"
+                exit 1
+              fi
+            fi
+            project_dir=$(dirname "$project_dir")
+          done
+
+          echo "✅ 项目可打包"
+
+      - name: Display project info
+        run: |
+          PROJECT_PATH="${{ github.event.inputs.project_path }}"
+          echo "📋 项目信息："
+          echo "=========================================="
+          echo "项目名称：$(basename "$PROJECT_PATH" .csproj)"
+          echo "项目路径：$PROJECT_PATH"
+          echo "目标框架：$(grep -oP '(?<=<TargetFramework>).*?(?=</TargetFramework>)' "$PROJECT_PATH" 2>/dev/null | head -1 || echo "未设置")"
+          echo "当前版本：$(grep -oP '(?<=<Version>).*?(?=</Version>)' "$PROJECT_PATH" 2>/dev/null || echo "未设置")"
+          echo "=========================================="
+
+      - name: Restore dependencies
+        run: |
+          echo "📦 正在恢复依赖..."
+          dotnet restore "${{ github.event.inputs.project_path }}"
+
+      - name: Pack single project
+        run: |
+          PROJECT_PATH="${{ github.event.inputs.project_path }}"
+          PROJECT_NAME=$(basename "$PROJECT_PATH" .csproj)
+          VERSION="${{ github.event.inputs.version }}"
+
+          echo "📦 正在打包项目：$PROJECT_NAME"
+          echo "📍 项目路径：$PROJECT_PATH"
+
+          if [ -z "$VERSION" ]; then
+            # 使用项目文件中的版本号
+            echo "📌 使用项目文件中的版本号"
+            dotnet pack "$PROJECT_PATH" -c Release -o packages --no-restore --include-symbols --include-source
+          else
+            # 使用指定的版本号
+            echo "📌 使用指定版本号：$VERSION"
+            dotnet pack "$PROJECT_PATH" -c Release -o packages --no-restore --include-symbols --include-source -p:PackageVersion="$VERSION"
+          fi
+
+          # 显示生成的包信息
+          echo ""
+          echo "✅ 打包完成，生成的包："
+          if [ -d "packages" ] && [ "$(ls -A packages/*.nupkg 2>/dev/null)" ]; then
+            ls -lh packages/*.nupkg
+          else
+            echo "⚠️ 未找到生成的 .nupkg 文件"
+            echo "可能的原因："
+            echo "1. 项目没有配置输出为 NuGet 包"
+            echo "2. 项目设置了 <IsPackable>false</IsPackable>"
+            echo "3. 项目是模板项目或特殊类型"
+            exit 1
+          fi
+
+      - name: Validate package
+        run: |
+          echo "🔍 验证生成的包..."
+          if [ ! -d "packages" ] || [ -z "$(ls -A packages/*.nupkg 2>/dev/null)" ]; then
+            echo "❌ 错误：没有生成任何 .nupkg 文件"
+            exit 1
+          fi
+
+          # 显示包详细信息
+          for pkg in packages/*.nupkg; do
+            echo "📦 包文件：$(basename "$pkg")"
+            echo "   大小：$(du -h "$pkg" | cut -f1)"
+          done
+
+      - name: NuGet login (OIDC)
+        id: nuget-login
+        uses: NuGet/login@v1
+        with:
+          user: your-nuget-username  # 替换为你的 NuGet 用户名
+
+      - name: Push NuGet packages
+        run: |
+          echo "📤 正在推送包到 NuGet.org..."
+
+          # 推送所有生成的包
+          for pkg in packages/*.nupkg; do
+            echo "  推送：$(basename "$pkg")"
+            dotnet nuget push "$pkg" \
+              --source https://api.nuget.org/v3/index.json \
+              --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} \
+              --skip-duplicate
+          done
+
+          echo "✅ 包推送完成！"
+
+      - name: Show published package info
+        run: |
+          echo ""
+          echo "=========================================="
+          echo "✅ 发布成功！"
+          echo "=========================================="
+          echo "📦 已发布的包："
+          for pkg in packages/*.nupkg; do
+            pkg_name=$(basename "$pkg" .nupkg)
+            echo "  📦 $pkg_name"
+          done
+          echo ""
+          echo "🔗 查看包：https://www.nuget.org/packages/"
+          echo "=========================================="
+
+      - name: Cleanup packages
+        if: always()
+        run: |
+          rm -rf packages
+          echo "🧹 已清理临时文件"
+
+  # 任务3：处理错误情况
+  error-handler:
+    runs-on: ubuntu-latest
+    if: failure() && github.event.inputs.list_projects != 'true'
+    needs: publish-single
+    steps:
+      - name: Show error message
+        run: |
+          echo "=========================================="
+          echo "❌ 发布失败！"
+          echo "=========================================="
+          echo "请检查以下可能的问题："
+          echo "1. 项目路径是否正确"
+          echo "2. 项目是否在 demo 文件夹下（会自动禁用）"
+          echo "3. 项目是否配置了 IsPackable=false"
+          echo "4. 版本号是否格式正确"
+          echo "5. NuGet 认证是否成功"
+          echo "6. 包是否已存在（版本冲突）"
+          echo ""
+          echo "💡 提示：勾选 list_projects 可以查看所有可打包的项目"
+          echo "=========================================="
+          exit 1
