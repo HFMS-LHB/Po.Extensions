@@ -1,21 +1,19 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 
-using DialogHostAvalonia;
-
-using Po.DialogHost.Avalonia.Interfaces;
+using Po.DialogHost.Core.Interfaces;
 
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Po.DialogHost.Avalonia.Dialogs;
+namespace Po.DialogHost.Core.Dialogs;
 
 /// <summary>
 /// Dialog基类
 /// </summary>
 public abstract class PoDialogBase<TData>() : ObservableValidator, IPoDialogPolicy, IPoDialogSessionAware
 {
-    private DialogSession? _session;
+    private IPoDialogSession? _session;
 
     public TData? Data { get; protected set; }
     public bool IsWorkCompleted { get; protected set; } = true;
@@ -58,7 +56,7 @@ public abstract class PoDialogBase<TData>() : ObservableValidator, IPoDialogPoli
         _session?.Close(parameter);
     }
 
-    public void SetSession(DialogSession session)
+    public void SetSession(IPoDialogSession session)
     {
         _session = session;
     }

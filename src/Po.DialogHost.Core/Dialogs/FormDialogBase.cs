@@ -1,7 +1,7 @@
-﻿using Po.DialogHost.Avalonia.Interfaces;
+using Po.DialogHost.Core.Interfaces;
 using Po.MVVM.Core.DependencyInjection;
 
-namespace Po.DialogHost.Avalonia.Dialogs;
+namespace Po.DialogHost.Core.Dialogs;
 
 /// <summary>
 /// 表单Dialog

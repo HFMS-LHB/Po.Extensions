@@ -2,9 +2,9 @@ using Avalonia.Controls;
 
 namespace Po.Demo.Avalonia.Views;
 
-public partial class MainWindow : Window
+public partial class TestDialogView : UserControl
 {
-    public MainWindow()
+    public TestDialogView()
     {
         InitializeComponent();
     }

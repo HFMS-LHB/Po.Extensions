@@ -1,16 +1,15 @@
-﻿using Po.DialogHost.Avalonia.Interfaces;
+using Po.DialogHost.Core.Interfaces;
 using Po.MVVM.Core.DependencyInjection;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
-namespace Po.DialogHost.Avalonia.Dialogs;
+namespace Po.DialogHost.Core.Dialogs;
 
 /// <summary>
 /// 任务Dialog
 /// </summary>
-/// <param name="poDialogService"></param>
 public abstract class TaskDialogBase<TData> : PoDialogBase<TData>
 {
     private readonly IPoDialogService _poDialogService;

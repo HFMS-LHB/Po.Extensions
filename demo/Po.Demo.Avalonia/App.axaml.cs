@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 
@@ -8,7 +8,7 @@ using Po.MVVM.Core.DependencyInjection;
 
 namespace Po.Demo.Avalonia;
 
-public partial class App : global::Avalonia.Application 
+public partial class App : global::Avalonia.Application
 {
     public override void Initialize()
     {

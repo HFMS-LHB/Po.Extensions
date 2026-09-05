@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/Core/">
     <Project Path="src/Po.Application.Core/Po.Application.Core.csproj" Id="d91567b5-9f47-49d6-b6b4-07c9f05a2e8d" />
+    <Project Path="src/Po.DialogHost.Core/Po.DialogHost.Core.csproj" Id="1e815a6e-1cd2-4499-9592-73232e50fe49" />
     <Project Path="src/Po.MVVM.Core/Po.MVVM.Core.csproj" Id="e456f694-b243-4b07-9d5f-e507b713cbe0" />
     <Project Path="src/Po.Navigation.Core/Po.Navigation.Core.csproj" />
   </Folder>
@@ -8,6 +9,7 @@
     <Project Path="demo/Po.Demo.Avalonia/Po.Demo.Avalonia.csproj" />
   </Folder>
   <Folder Name="/SolutionItems/">
+    <File Path=".editorconfig" />
     <File Path=".gitignore" />
     <File Path="LICENSE" />
     <File Path="README.md" />
@@ -15,7 +17,13 @@
   <Folder Name="/SolutionItems/build/">
     <File Path="build/build.ps1" />
   </Folder>
+  <Folder Name="/Adapters/">
+    <Project Path="src/Po.DialogHost.DialogHostAvalonia/Po.DialogHost.DialogHostAvalonia.csproj" />
+    <Project Path="src/Po.DialogHost.Ursa/Po.DialogHost.Ursa.csproj" />
+  </Folder>
+  <Folder Name="/SolutionItems/src/">
+    <File Path="src/Directory.Build.props" />
+  </Folder>
   <Project Path="src/Po.Application.Avalonia/Po.Application.Avalonia.csproj" Id="d38a0e06-93dd-4710-bc6a-e84731a280f4" />
-  <Project Path="src/Po.DialogHost.Avalonia/Po.DialogHost.Avalonia.csproj" Id="1e815a6e-1cd2-4499-9592-73232e50fe49" />
   <Project Path="src/Po.Navigation.Avalonia/Po.Navigation.Avalonia.csproj" Id="22e98f81-a1a1-47de-9d39-fe1e3a45c096" />
 </Solution>

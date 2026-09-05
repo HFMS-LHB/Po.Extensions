@@ -1,6 +1,6 @@
 using System;
 
-namespace Po.DialogHost.Avalonia.Interfaces;
+namespace Po.DialogHost.Core.Interfaces;
 
 public interface IPoDialogPolicy
 {

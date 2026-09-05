@@ -1,4 +1,4 @@
-﻿using Avalonia;
+using Avalonia;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,7 +7,8 @@ using Po.Application.Avalonia.DependencyInjection;
 using Po.Application.Core.DependencyInjection;
 using Po.Demo.Avalonia.ViewModels;
 using Po.Demo.Avalonia.Views;
-using Po.DialogHost.Avalonia.DependencyInjection;
+using Po.DialogHost.DialogHostAvalonia.DependencyInjection;
+using Po.DialogHost.Ursa.DependencyInjection;
 using Po.MVVM.Core.DependencyInjection;
 using Po.Navigation.Avalonia.DependencyInjection;
 using Po.Navigation.Core;
@@ -20,8 +21,8 @@ class Program
 {
     public static IHost Host { get; private set; } = null!;
 
-    // Initialization code. Don't use any Avalonia, third-party APIs or any
-    // SynchronizationContext-reliant code before AppMain is called: things aren't initialized
+    // Initialization code. Do not use any Avalonia, third-party APIs or any
+    // SynchronizationContext-reliant code before AppMain is called: things are not initialized
     // yet and stuff might break.
     [STAThread]
     public static void Main(string[] args)
@@ -40,7 +41,7 @@ class Program
 
 
 
-    // Avalonia configuration, don't remove; also used by visual designer.
+    // Avalonia configuration, do not remove; also used by visual designer.
     public static AppBuilder BuildAvaloniaApp()
         => AppBuilder.Configure<App>()
             .UsePlatformDetect()
@@ -59,16 +60,19 @@ class Program
                 services.AddPoMVVM();
                 services.AddPoApplicationCore();
                 services.AddPoApplicationAvalonia();
-                services.AddPoDialogHost();
+                // services.AddPoDialogHostWithDialogHostAvalonia();
+                services.AddPoDialogHostWithUrsa();
                 services.AddPoNavigation();
             })
             .ConfigureServices(ConfigureServices);
     }
 
-    private static void ConfigureServices(IServiceCollection services) 
+    private static void ConfigureServices(IServiceCollection services)
     {
         services.AddTransient<MainWindow>();
         services.AddTransient<MainViewModel>();
+        services.AddTransient<TestDialogView>();
+        services.AddTransient<TestDialogViewModel>();
 
         services.AddNavigation<HomeView, HomeViewModel>();
     }

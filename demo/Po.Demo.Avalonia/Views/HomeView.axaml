@@ -1,10 +1,19 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:vm="using:Po.Demo.Avalonia.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="Po.Demo.Avalonia.Views.HomeView"
-             x:DataType="vm:HomeViewModel">
-  Welcome to Home!
+<UserControl
+    x:Class="Po.Demo.Avalonia.Views.HomeView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Po.Demo.Avalonia.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:HomeViewModel"
+    mc:Ignorable="d">
+    <StackPanel
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        Spacing="16">
+        <TextBlock FontSize="24" Text="Welcome to Home!" />
+        <Button Command="{Binding ShowTestDialogCommand}" Content="Show Test Dialog" />
+    </StackPanel>
 </UserControl>

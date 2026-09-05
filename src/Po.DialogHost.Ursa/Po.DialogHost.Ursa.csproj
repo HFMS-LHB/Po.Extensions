@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Po.DialogHost.Ursa</PackageId>
+    <Version>0.0.1</Version>
+    <Description>Ursa overlay dialog adapter for Po.DialogHost.</Description>
+    <PackageTags>Avalonia;Dialog;Ursa;MVVM</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.DialogHost.Core\Po.DialogHost.Core.csproj" />
+    <PackageReference Include="Irihi.Ursa" Version="2.2.0" />
+    <PackageReference Include="Irihi.Avalonia.Shared.Contracts" Version="0.5.0" />
+  </ItemGroup>
+
+</Project>

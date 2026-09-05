@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <PackageId>Po.DialogHost.DialogHostAvalonia</PackageId>
+    <Version>0.0.1</Version>
+    <Description>DialogHost.Avalonia adapter for Po.DialogHost.</Description>
+    <PackageTags>Avalonia;Dialog;DialogHost;MVVM</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Po.DialogHost.Core\Po.DialogHost.Core.csproj" />
+    <PackageReference Include="DialogHost.Avalonia" Version="0.12.3" />
+    <PackageReference Include="Xaml.Behaviors.Avalonia" Version="12.0.7" />
+  </ItemGroup>
+
+</Project>
