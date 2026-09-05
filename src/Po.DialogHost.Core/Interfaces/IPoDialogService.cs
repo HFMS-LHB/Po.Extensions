@@ -18,8 +18,9 @@ public interface IPoDialogService
     /// </summary>
     /// <param name="content">对话框内容，可以是 View 或 ViewModel。</param>
     /// <param name="hostIdentifier">DialogHost 标识。</param>
+    /// <param name="options">适配器特定的选项对象。</param>
     /// <returns>对话框关闭时返回的结果。</returns>
-    Task<object?> ShowAsync(object content, string? hostIdentifier = "Main");
+    Task<object?> ShowAsync(object content, string? hostIdentifier = "Main", object? options = null);
 
     /// <summary>
     /// 显示指定内容的对话框，并初始化对话框数据。
@@ -28,8 +29,9 @@ public interface IPoDialogService
     /// <param name="content">实现 <see cref="PoDialogBase{TData}"/> 的对话框 ViewModel。</param>
     /// <param name="data">初始化对话框的数据。</param>
     /// <param name="hostIdentifier">DialogHost 标识。</param>
+    /// <param name="options">适配器特定的选项对象。</param>
     /// <returns>对话框关闭时返回的结果。</returns>
-    Task<object?> ShowAsync<TData>(object content, TData data, string? hostIdentifier = "Main");
+    Task<object?> ShowAsync<TData>(object content, TData data, string? hostIdentifier = "Main", object? options = null);
 
     /// <summary>
     /// 创建并显示指定类型的对话框。
@@ -41,8 +43,9 @@ public interface IPoDialogService
     /// <typeparam name="TData">初始化数据类型。</typeparam>
     /// <param name="data">初始化对话框的数据。</param>
     /// <param name="hostIdentifier">DialogHost 标识。</param>
+    /// <param name="options">适配器特定的选项对象。</param>
     /// <returns>对话框关闭时返回的结果。</returns>
-    Task<object?> ShowAsync<TDialog, TData>(TData data, string? hostIdentifier = "Main") where TDialog : PoDialogBase<TData>;
+    Task<object?> ShowAsync<TDialog, TData>(TData data, string? hostIdentifier = "Main", object? options = null) where TDialog : PoDialogBase<TData>;
 
     /// <summary>
     /// 关闭指定的对话框。

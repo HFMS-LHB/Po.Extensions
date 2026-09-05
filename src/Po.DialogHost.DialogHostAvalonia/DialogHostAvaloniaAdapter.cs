@@ -16,10 +16,13 @@ public sealed class DialogHostAvaloniaAdapter : IDialogHostAdapter
     public Task<object?> ShowAsync(
         object content,
         string? hostIdentifier = null,
+        object? options = null,
         CancellationToken cancellationToken = default)
     {
         var identifier = hostIdentifier ?? "Main";
 
+        // DialogHost.Avalonia 目前不通过 options 接收额外配置，
+        // 调用方可忽略此参数或使用未来可能支持的扩展。
         return Dispatcher.UIThread.InvokeAsync(
             () => global::DialogHostAvalonia.DialogHost.Show(content, identifier),
             DispatcherPriority.Background);

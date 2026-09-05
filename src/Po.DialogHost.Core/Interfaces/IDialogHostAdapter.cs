@@ -13,11 +13,13 @@ public interface IDialogHostAdapter
     /// </summary>
     /// <param name="content">对话框内容，通常是 ViewModel。</param>
     /// <param name="hostIdentifier">宿主标识。</param>
+    /// <param name="options">适配器特定的选项对象。例如 Ursa 可传入 <see cref="Ursa.Controls.OverlayDialogOptions"/>。</param>
     /// <param name="cancellationToken">取消令牌。</param>
     /// <returns>对话框关闭时返回的结果。</returns>
     Task<object?> ShowAsync(
         object content,
         string? hostIdentifier = null,
+        object? options = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

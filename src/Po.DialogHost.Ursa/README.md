@@ -30,22 +30,20 @@ var result = await _dialogService.ShowAsync<MyDialogViewModel, MyData>(data);
 
 ## Customizing OverlayDialogOptions
 
-Implement `IUrsaDialogOptionsProvider` on your ViewModel:
+The caller can pass `Ursa.Controls.OverlayDialogOptions` as the `options` argument:
 
 ```csharp
-public class MyDialogViewModel : TaskDialogBase<MyData>, IUrsaDialogOptionsProvider
+using Ursa.Controls;
+
+var options = new OverlayDialogOptions
 {
-    public OverlayDialogOptions GetOptions()
-    {
-        return new OverlayDialogOptions
-        {
-            Title = "My Title",
-            FullScreen = false,
-            HorizontalAnchor = HorizontalPosition.Center,
-            VerticalAnchor = VerticalPosition.Center,
-        };
-    }
-}
+    Title = "My Title",
+    FullScreen = false,
+    HorizontalAnchor = HorizontalPosition.Center,
+    VerticalAnchor = VerticalPosition.Center,
+};
+
+var result = await _dialogService.ShowAsync<MyDialogViewModel, MyData>(data, "Main", options);
 ```
 
 The adapter will use these options and also apply `CloseOnClickAway` / `CanClose` from `IPoDialogPolicy`.

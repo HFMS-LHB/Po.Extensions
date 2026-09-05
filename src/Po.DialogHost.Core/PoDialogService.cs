@@ -13,27 +13,27 @@ public class PoDialogService(IDialogHostAdapter adapter) : IPoDialogService
         return PoContainer.GetRequiredService<TDialog>();
     }
 
-    public Task<object?> ShowAsync(object content, string? hostIdentifier = "Main")
+    public Task<object?> ShowAsync(object content, string? hostIdentifier = "Main", object? options = null)
     {
-        return adapter.ShowAsync(content, hostIdentifier);
+        return adapter.ShowAsync(content, hostIdentifier, options);
     }
 
-    public Task<object?> ShowAsync<TDialog, TData>(TData data, string? hostIdentifier = "Main") where TDialog : PoDialogBase<TData>
+    public Task<object?> ShowAsync<TDialog, TData>(TData data, string? hostIdentifier = "Main", object? options = null) where TDialog : PoDialogBase<TData>
     {
         var vm = PoContainer.GetRequiredService<TDialog>();
 
         vm.Initialize(data);
 
-        return ShowAsync(vm, hostIdentifier);
+        return ShowAsync(vm, hostIdentifier, options);
     }
 
-    public Task<object?> ShowAsync<TData>(object content, TData data, string? hostIdentifier = "Main")
+    public Task<object?> ShowAsync<TData>(object content, TData data, string? hostIdentifier = "Main", object? options = null)
     {
         if (content is PoDialogBase<TData> vm && vm != null)
         {
             vm.Initialize(data);
 
-            return ShowAsync(vm, hostIdentifier);
+            return ShowAsync(vm, hostIdentifier, options);
         }
 
         return Task.FromResult<object?>(null);

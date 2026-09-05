@@ -22,6 +22,7 @@ public sealed class UrsaDialogAdapter : IDialogHostAdapter
     public Task<object?> ShowAsync(
         object content,
         string? hostIdentifier = null,
+        object? options = null,
         CancellationToken cancellationToken = default)
     {
         var id = hostIdentifier ?? "Main";
@@ -47,7 +48,7 @@ public sealed class UrsaDialogAdapter : IDialogHostAdapter
                     proxy,
                     proxy,
                     id,
-                    CreateOptions(content),
+                    CreateOptions(content, options),
                     cancellationToken);
             }
             finally
@@ -79,19 +80,17 @@ public sealed class UrsaDialogAdapter : IDialogHostAdapter
         return _openProxies.TryGetValue(id, out var stack) && stack.Count > 0;
     }
 
-    private static OverlayDialogOptions CreateOptions(object content)
+    private static OverlayDialogOptions CreateOptions(object content, object? options)
     {
-        var options = content is IUrsaDialogOptionsProvider provider
-            ? provider.GetOptions()
-            : new OverlayDialogOptions();
+        var overlayOptions = options as OverlayDialogOptions ?? new OverlayDialogOptions();
 
         if (content is IPoDialogPolicy policy)
         {
-            options.CanLightDismiss = policy.CloseOnClickAway;
-            options.IsCloseButtonVisible = policy.CanClose;
+            overlayOptions.CanLightDismiss = policy.CloseOnClickAway;
+            overlayOptions.IsCloseButtonVisible = policy.CanClose;
         }
 
-        return options;
+        return overlayOptions;
     }
 
     private void TrackProxy(string hostId, UrsaDialogProxy proxy)
