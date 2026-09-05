@@ -81,7 +81,9 @@ public sealed class UrsaDialogAdapter : IDialogHostAdapter
 
     private static OverlayDialogOptions CreateOptions(object content)
     {
-        var options = new OverlayDialogOptions();
+        var options = content is IUrsaDialogOptionsProvider provider
+            ? provider.GetOptions()
+            : new OverlayDialogOptions();
 
         if (content is IPoDialogPolicy policy)
         {
