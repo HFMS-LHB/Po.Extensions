@@ -58,7 +58,6 @@ class Program
             .ConfigureServices((context, services) =>
             {
                 services.AddPoMVVM();
-                services.AddPoApplicationCore();
                 services.AddPoApplicationAvalonia();
                 // services.AddPoDialogHostWithDialogHostAvalonia();
                 services.AddPoDialogHostWithUrsa();

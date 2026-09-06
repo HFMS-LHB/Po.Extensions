@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Po.Application.Avalonia.FilePickers;
 using Po.Application.Avalonia.Monitors;
 using Po.Application.Avalonia.Windows;
+using Po.Application.Core.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ public static class ServiceCollectionExtensions
         {
             services.Configure(configure);
         }
-
+        services.AddPoApplicationCore();
         services.TryAddSingleton<IMainWindowProvider, MainWindowProvider>();
         services.TryAddSingleton<IFilePickerService, FilePickerService>();
         services.TryAddSingleton<IUserActivityMonitor, UserActivityMonitor>();
