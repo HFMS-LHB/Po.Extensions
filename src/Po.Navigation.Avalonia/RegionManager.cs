@@ -16,6 +16,8 @@ public class RegionManager : IAvaloniaRegionManager
 
     private readonly Dictionary<string, NavigationRegistration> _registrations = new();
 
+    private readonly Dictionary<Control, string> _viewKeys = new();
+
     private readonly Dictionary<string, Control> _cache = new();
 
     public RegionManager(IEnumerable<NavigationRegistration> registrations)
@@ -155,7 +157,10 @@ public class RegionManager : IAvaloniaRegionManager
             {
                 if (lifetime.KeepAlive)
                 {
-                    _cache[$"{regionName}:{key}"] = oldView;
+                    if (_viewKeys.TryGetValue(oldView, out var oldKey))
+                    {
+                        _cache[$"{regionName}:{oldKey}"] = oldView;
+                    }
                 }
                 else
                 {
@@ -174,6 +179,7 @@ public class RegionManager : IAvaloniaRegionManager
         var vm = PoContainer.GetRequiredService(registration.ViewModelType);
         var view = (Control)PoContainer.GetRequiredService(registration.ViewType)!;
         view.DataContext = vm;
+        _viewKeys[view] = registration.Key;
 
         if (vm is INavigationAware aware)
         {
